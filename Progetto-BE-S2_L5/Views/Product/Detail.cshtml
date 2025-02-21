@@ -1,0 +1,23 @@
+﻿@model Articolo
+
+@{
+    ViewData["Title"] = "Dettaglio";
+}
+
+
+<div class="container">
+    <div class="row py-4 border-bottom border-secondary align-items-baseline">
+        <h2 class="h1 col-6 text-start">Dettagli Prodotto:</h2>
+        <a asp-controller="Product" asp-action="Index" class="col-6 text-end fw-bold ">Go Back<i class="bi bi-arrow-left-square"></i></a>
+    </div>
+    <div class="row my-3">
+        <div class="col-3" >
+            <img src="@Model.Immagini![0]" alt="Immagine Prodotto" class="img-fluid">
+        </div>
+        <div class="col-9 border-start border-dark">
+            <h4>@Model.Name</h4>
+            <p class="fw-bold pb-4">$ @Model.Price</p>
+            <p>@Model.Description</p>
+        </div>
+    </div>
+</div>
