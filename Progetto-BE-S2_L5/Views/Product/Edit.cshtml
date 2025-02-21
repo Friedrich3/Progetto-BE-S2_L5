@@ -1,0 +1,72 @@
+﻿@using Progetto_BE_S2_L5.Models.ViewModels
+@model ArticoloEditViewModel
+@{
+    ViewData["Title"] = "Edita Prodotto";
+}
+
+
+<div class="container">
+    <div class="row py-4 mb-3 border-bottom border-secondary">
+        <h1 id="backofficeTitle">Modifica prodotto</h1>
+    </div>
+    <div class="row">
+        <form method="post" asp-controller="Product" asp-action="EditSave" asp-route-id=@Model.Id>
+            <fieldset>
+                <div class="d-flex flex-column">
+                    <label for="productName" class="form-label fw-medium">Nome:</label>
+                    <input type="text" asp-for="Name" placeholder="Nome..." id="productName" class="mb-1" required>
+                </div>
+                <div class="d-flex flex-column">
+                    <label for="productPrice" class="form-label fw-medium">Prezzo</label>
+                    <input type="number" asp-for="Price" step="0.01" placeholder="Prezzo...€" id="productPrice" class="mb-1" required>
+                </div>
+                <div class="d-flex flex-column" id="urlContainer">
+                    <label for="productUrl" class="form-label fw-medium">URL Immagine</label>
+
+                    @foreach (var item in Model.Immagini.Select((value, index) => new{ value, index} ))
+                    {
+                        <div class="d-flex mb-1">
+                            <input type = "text" name="Immagini" value=@Model.Immagini[item.index] placeholder="https://placeholder/images/nomeprodotto.jpg" id="productUrl" class=" col-11" required>
+                            <img class="col-1 p-0" src="@Model.Immagini[item.index]" style="height:50px;" />
+                            </div>
+                    }
+
+                </div>
+                <div class="d-flex">
+                    <button type="button" onclick="addUrl()" class="btn btn-outline-success fw-medium mb-1">Aggiungi un URL</button>
+                </div>
+                <div class="d-flex flex-column">
+                    <label for="productDescription" class="form-label fw-medium ">Descrizione Prodotto</label>
+                    <textarea asp-for="Description" placeholder="Descrizione..." id="productDescription" rows="6" class="mb-1" required></textarea>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <a asp-controller="Product" asp-action="Delete" asp-route-id=@Model.Id class="w-100 btn btn-danger"><i class="bi bi-trash"></i></a>
+                    </div>
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                        <a asp-controller="Product" asp-action="Edit" class="w-100 fw-bold btn btn-outline-secondary">RESET</a>
+                    </div>
+                    <div class="col-3">
+                        <button type="submit" class="w-100 fw-bold btn btn-warning">INSERT</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script>
+    function addUrl(){
+    var urlContainer = document.getElementById("urlContainer");
+    var newInput = document.createElement("input");
+    newInput.setAttribute("name", "Immagini");
+    newInput.setAttribute("required", "true");
+    newInput.setAttribute("type", "text");
+    newInput.setAttribute("placeholder", "https://placeholder/images/nomeprodotto.jpg");
+    newInput.classList.add("mb-1");
+
+    urlContainer.appendChild(newInput);
+
+    }
+</script>

@@ -82,6 +82,59 @@ namespace Progetto_BE_S2_L5.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet("/Product/Detail/Edit/{id:guid}")]
+        public IActionResult Edit(Guid id)
+        {
+            var prodotto = prodotti.FirstOrDefault(item=> item.Id == id);
+            if (prodotto == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var editProduct = new ArticoloEditViewModel()
+            {
+                Id = prodotto.Id,
+                Name = prodotto.Name,
+                Price = prodotto.Price,
+                Description = prodotto.Description,
+                Immagini = prodotto.Immagini,
+            };
+            return View(editProduct);  
+        }
+
+        [HttpPost("Product/Detail/Save/{id:guid}")]
+        public IActionResult EditSave(Guid id , ArticoloEditViewModel itemSalvato)
+        {
+            var prodotto = prodotti.FirstOrDefault(item => item.Id == id);
+            if (prodotto == null)
+            {
+                return RedirectToAction("Index");
+            }
+            prodotto.Name = itemSalvato.Name;
+            prodotto.Price = itemSalvato.Price;
+            prodotto.Description = itemSalvato.Description;
+            prodotto.Immagini = itemSalvato.Immagini!.Select(e => new string(e)).ToList() as List<string>;
+
+
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet("/Product/Detail/Delete/{id:guid}")]
+        public IActionResult Delete(Guid id) 
+        {
+            var prodotto = prodotti.FirstOrDefault(item => item.Id == id);
+            if (prodotto == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var isRemoved = prodotti.Remove(prodotto);
+            
+
+            return RedirectToAction("Index");
+        }
+
+
 
     }
 }
