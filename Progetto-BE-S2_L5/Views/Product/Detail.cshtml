@@ -12,7 +12,16 @@
     </div>
     <div class="row my-3">
         <div class="col-3" >
-            <img src="@Model.Immagini![0]" alt="Immagine Prodotto" class="img-fluid">
+            <div class="row">
+
+                <img src="@Model.Immagini![0]" alt="Immagine Prodotto" class="img-fluid py-5">
+            </div>
+            <div class="row">
+                @for(int i = 1; i< Model.Immagini.Count; i++)
+                {
+                    <img src="@Model.Immagini![i]" alt="Immagine Prodotto" class="img-fluid col-3 mt-2 border border-1 px-0">
+                }
+            </div>
         </div>
         <div class="col-9 border-start border-dark">
             <h4>@Model.Name</h4>

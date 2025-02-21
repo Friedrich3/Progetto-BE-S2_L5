@@ -29,7 +29,8 @@ namespace Progetto_BE_S2_L5.Controllers
                 Description= "Lascia che il tuo gioco risplenda con queste scarpe da tennis Court Spec 2 di Adidas. Con una suola in gomma all-court e un'intersuola flessibile Bounce, queste scarpe leggere offrono prestazioni solide su qualsiasi superficie. La rete traspirante e la pelle sintetica si uniscono per una tomaia dall'aspetto classico che ti terrà comodo durante intensi rally. Questo prodotto presenta almeno il 20% di materiali riciclati. Riutilizzando materiali già creati, contribuiamo a ridurre gli sprechi e la nostra dipendenza da risorse limitate e a ridurre l'impronta dei prodotti che realizziamo.",
                 Immagini =["https://m.media-amazon.com/images/I/71ndvq0YQgL._AC_SY575_.jpg", "https://m.media-amazon.com/images/I/71VajxGBq4L._AC_SY575_.jpg", "https://m.media-amazon.com/images/I/71LF-lSsA7L._AC_SY575_.jpg"]
             },
-            
+         
+
 
         };
         public IActionResult Index()
@@ -53,6 +54,32 @@ namespace Progetto_BE_S2_L5.Controllers
 
 
             return View(singleProduct);
+        }
+
+        public IActionResult Add()
+        {
+            var newProdotto = new ArticoloAddViewModel();
+            return View(newProdotto);
+        }
+        [HttpPost]
+        public IActionResult Add(ArticoloAddViewModel newProdotto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+            var newArticolo = new Articolo()
+            {
+                Id = Guid.NewGuid(),
+                Name = newProdotto.Name,
+                Price = newProdotto.Price,
+                Description = newProdotto.Description,
+                //Seleziona tutti gli elementi del array IMMAGINI , e li converte in una lista di strighe 
+                Immagini = newProdotto.Immagini!.Select(e => new string(e)).ToList() as List<string>
+                
+            };
+            prodotti.Add(newArticolo);
+            return RedirectToAction("Index");
         }
 
 
