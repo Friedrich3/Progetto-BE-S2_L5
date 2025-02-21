@@ -130,7 +130,6 @@ namespace Progetto_BE_S2_L5.Controllers
             }
             var isRemoved = prodotti.Remove(prodotto);
             
-
             return RedirectToAction("Index");
         }
 
